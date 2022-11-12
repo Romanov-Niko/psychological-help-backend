@@ -1,0 +1,124 @@
+buildscript {
+    ext {
+        springBootVersion = "2.7.5"
+        springDependencyVersion = "1.1.0"
+        jibVersion = "3.3.1"
+        spotlessVersion = "6.11.0"
+        githookVersion = "1.2.1"
+    }
+}
+
+plugins {
+    id "java"
+    id "idea"
+    id "org.springframework.boot" version "${springBootVersion}"
+    id "io.spring.dependency-management" version "${springDependencyVersion}"
+    //coverage
+    id "jacoco"
+    //build docker image
+    id "com.google.cloud.tools.jib" version "${jibVersion}"
+    //checkstyle
+    id "com.diffplug.spotless" version "${spotlessVersion}"
+    id "com.star-zero.gradle.githook" version "${githookVersion}"
+}
+
+repositories {
+    mavenCentral()
+}
+
+githook {
+    failOnMissingHooksDir = false
+    hooks {
+        "pre-push" {
+            task = "spotlessJavaCheck"
+        }
+    }
+}
+
+spotless {
+    java {
+        googleJavaFormat()
+        removeUnusedImports()
+    }
+}
+
+group = 'com.kpi'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 17
+targetCompatibility = 17
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+ext {
+    testContainersVersion = "1.17.5"
+    awaitilityVersion = "4.2.0"
+}
+
+dependencies {
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.postgresql:postgresql")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.mockito:mockito-core")
+    testImplementation("org.testcontainers:postgresql:${testContainersVersion}")
+    testImplementation("org.awaitility:awaitility:${awaitilityVersion}")
+
+    testCompileOnly("org.projectlombok:lombok")
+    testAnnotationProcessor("org.projectlombok:lombok")
+}
+
+// BEGIN: Testing configuration
+test.finalizedBy("jacocoTestReport")
+jacocoTestReport.finalizedBy("jacocoTestCoverageVerification")
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = "CLASS"
+            includes = ["com.kpi.*"]
+            excludes = ["com.kpi.PsychologicalHelpBackendApplication"]
+            limit {
+                counter = "BRANCH"
+                minimum = 0.5
+            }
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+// END: Testing configuration
+
+bootRun {
+    systemProperty("spring.profiles.active", "development")
+}
+
+// BEGIN: Docker configuration
+jib {
+    from {
+        image = "openjdk:17-slim"
+    }
+
+    container {
+        environment = ["LANG"           : "C.UTF-8",
+                       "SERVICE_NAME"   : jar.archiveBaseName.get(),
+                       "SERVICE_STACK"  : "Spring",
+                       "SERVICE_VERSION": System.getenv("VERSION") ?: "latest-dev"]
+    }
+}
+// END: Docker configuration
