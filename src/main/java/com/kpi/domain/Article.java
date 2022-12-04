@@ -21,7 +21,7 @@ public class Article {
 
   @ManyToOne
   @JoinColumn(name = "specialist_id")
-  private Specialist specialist;
+  private User specialist;
 
   @Column private LocalDateTime dateTime;
   @Column private String title;

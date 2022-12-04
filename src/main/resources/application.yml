@@ -2,11 +2,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+    open-in-view: false
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/psychological-help-database
     username: postgres
     password: password
   sql:
     init:
       mode: always
+      data-locations: classpath:/test-data.sql
+
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem
 

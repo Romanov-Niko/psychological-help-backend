@@ -2,37 +2,28 @@ DELETE FROM appointment_review;
 DELETE FROM appointment;
 DELETE FROM article;
 
-DELETE FROM admin;
-DELETE FROM patient;
-DELETE FROM specialist;
-DELETE FROM users;
-
 DELETE FROM specialist_specialization;
-DELETE FROM specialist;
 DELETE FROM specialization;
 
+DELETE FROM users;
+DELETE FROM role;
+
+ALTER SEQUENCE role_id_seq RESTART WITH 1;
 ALTER SEQUENCE users_id_seq RESTART WITH 1;
-ALTER SEQUENCE admin_id_seq RESTART WITH 1;
-ALTER SEQUENCE patient_id_seq RESTART WITH 1;
-ALTER SEQUENCE specialist_id_seq RESTART WITH 1;
 ALTER SEQUENCE specialization_id_seq RESTART WITH 1;
 ALTER SEQUENCE appointment_id_seq RESTART WITH 1;
 ALTER SEQUENCE appointment_review_id_seq RESTART WITH 1;
 ALTER SEQUENCE article_id_seq RESTART WITH 1;
 
-INSERT INTO users(id, name, email, phone_number)
-VALUES (1, 'user_1', 'email_1', 'phone_number_1'),
-       (2, 'user_2', 'email_2', 'phone_number_2'),
-       (3, 'user_3', 'email_3', 'phone_number_3');
+INSERT INTO role(id, name)
+VALUES (1, 'SPECIALIST'),
+       (2, 'ADMIN'),
+       (3, 'PATIENT');
 
-INSERT INTO admin(id, user_id, access_level)
-VALUES (1, 1, 'ALL');
-
-INSERT INTO patient(id, user_id)
-VALUES (1, 2);
-
-INSERT INTO specialist(id, user_id, verified)
-VALUES (1, 2, true);
+INSERT INTO users(id, name, email, password, phone_number, role_id, specialist)
+VALUES (1, 'user_1', 'email_1', '$2a$10$I0tK3uyYb2EnGYHCAl.fo.PdxSzhzWNY2oxQpLPL.oJPU6gAAqmcO', 'phone_number_1', 1, true),
+       (2, 'user_2', 'email_2', '$2a$10$I0tK3uyYb2EnGYHCAl.fo.PdxSzhzWNY2oxQpLPL.oJPU6gAAqmcO', 'phone_number_2', 2, false),
+       (3, 'user_3', 'email_3', '$2a$10$I0tK3uyYb2EnGYHCAl.fo.PdxSzhzWNY2oxQpLPL.oJPU6gAAqmcO', 'phone_number_3', 3, false);
 
 INSERT INTO specialization(id, name)
 VALUES (1, 'test_specialization_1'),
@@ -45,7 +36,7 @@ VALUES (1, 1),
        (1, 3);
 
 INSERT INTO appointment(id, patient_id, specialist_id, date_time, canceled)
-VALUES (1, 1, 1, now(), false);
+VALUES (1, 3, 1, now(), false);
 
 INSERT INTO appointment_review(id, appointment_id, date_time, review_text)
 VALUES (1, 1, now(), 'Text review text');
