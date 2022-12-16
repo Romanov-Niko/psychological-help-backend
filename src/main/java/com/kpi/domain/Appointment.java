@@ -21,11 +21,11 @@ public class Appointment {
 
   @ManyToOne
   @JoinColumn(name = "patient_id")
-  private Patient patient;
+  private User patient;
 
   @ManyToOne
   @JoinColumn(name = "specialist_id")
-  private Specialist specialist;
+  private User specialist;
 
   @Column private LocalDateTime dateTime;
   @Column private Boolean canceled;

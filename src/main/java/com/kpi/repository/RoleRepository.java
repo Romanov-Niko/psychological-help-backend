@@ -1,8 +1,8 @@
 package com.kpi.repository;
 
-import com.kpi.domain.Specialist;
+import com.kpi.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SpecialistRepository extends JpaRepository<Specialist, Integer> {}
+public interface RoleRepository extends JpaRepository<Role, Integer> {}

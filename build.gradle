@@ -64,12 +64,12 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.postgresql:postgresql")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mockito:mockito-core")
-    testImplementation("org.testcontainers:postgresql:${testContainersVersion}")
-    testImplementation("org.awaitility:awaitility:${awaitilityVersion}")
+    testImplementation("com.h2database:h2")
 
     testCompileOnly("org.projectlombok:lombok")
     testAnnotationProcessor("org.projectlombok:lombok")
@@ -114,12 +114,9 @@ jib {
     from {
         image = "openjdk:17-slim"
     }
-
-    container {
-        environment = ["LANG"           : "C.UTF-8",
-                       "SERVICE_NAME"   : jar.archiveBaseName.get(),
-                       "SERVICE_STACK"  : "Spring",
-                       "SERVICE_VERSION": System.getenv("VERSION") ?: "latest-dev"]
+    to {
+        image = "romanovniko/${project.name}"
+        tags = ["latest"]
     }
 }
 // END: Docker configuration
