@@ -114,12 +114,9 @@ jib {
     from {
         image = "openjdk:17-slim"
     }
-
-    container {
-        environment = ["LANG"           : "C.UTF-8",
-                       "SERVICE_NAME"   : jar.archiveBaseName.get(),
-                       "SERVICE_STACK"  : "Spring",
-                       "SERVICE_VERSION": System.getenv("VERSION") ?: "latest-dev"]
+    to {
+        image = "romanovniko/${project.name}"
+        tags = ["latest"]
     }
 }
 // END: Docker configuration

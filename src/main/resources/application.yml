@@ -4,9 +4,9 @@ spring:
       ddl-auto: validate
     open-in-view: false
   datasource:
-    url: jdbc:postgresql://localhost:5432/psychological-help-database
-    username: postgres
-    password: password
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
   sql:
     init:
       mode: always

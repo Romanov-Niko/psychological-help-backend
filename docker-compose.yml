@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  backend:
+    image: 'romanovniko/psychological-help-backend:latest'
+    container_name: psychological-help-backend
+    depends_on:
+      - database
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/psychological-help-database
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+    ports:
+      - "8080:8080"
+
+  database:
+    image: 'postgres:latest'
+    container_name: psychological-help-database
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=psychological-help-database
+    ports:
+      - "5432:5432"
