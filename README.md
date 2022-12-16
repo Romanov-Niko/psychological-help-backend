@@ -1,8 +1,4 @@
-## How to run the application locally:
-* Start the database using the following script:
-    ```
-    docker run --name psychological-help-database -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=psychological-help-database -d postgres
-    ```
+## How to use the application locally:
 * Generate certificates using the following script and place them to the `resources/certs` folder:
     ```
     # create rsa key pair
@@ -12,4 +8,11 @@
     # create private key in PKCS#8 format
     openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in keypair.pem -out private.pem
     ```
-* Start the application
+* Start the application using the following command:
+    ```
+    docker-compose up -d
+    ```
+* Stop the application using the following command:
+    ```
+    docker-compose down
+    ```
