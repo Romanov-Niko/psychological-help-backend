@@ -34,7 +34,6 @@ public class UserControllerTest {
             .email("email_1")
             .phoneNumber("phone_number_1")
             .role("SPECIALIST")
-            .isSpecialist(true)
             .build();
 
     String token = getToken("email_2", "password");

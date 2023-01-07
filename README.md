@@ -8,6 +8,19 @@
     # create private key in PKCS#8 format
     openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in keypair.pem -out private.pem
     ```
+* Create `.env` file in the same directory as the docker compose file, it should look something like this:
+    ```
+    SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/psychological-help-database
+    SPRING_DATASOURCE_USERNAME=username
+    SPRING_DATASOURCE_PASSWORD=password
+  
+    SPRING_MAIL_USERNAME=username
+    SPRING_MAIL_PASSWORD=password
+  
+    POSTGRES_USER=user
+    POSTGRES_PASSWORD=password
+    POSTGRES_DB=psychological-help-database
+    ```
 * Start the application using the following command:
     ```
     docker-compose up -d

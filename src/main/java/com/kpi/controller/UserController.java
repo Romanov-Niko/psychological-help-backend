@@ -37,8 +37,7 @@ public class UserController {
         .name(user.getName())
         .email(user.getEmail())
         .phoneNumber(user.getPhoneNumber())
-        .role(user.getRole().getName())
-        .isSpecialist(user.getIsSpecialist())
+        .role(user.getRole().getName().name())
         .build();
   }
 }

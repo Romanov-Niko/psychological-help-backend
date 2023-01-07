@@ -17,12 +17,12 @@ public class TokenService {
 
   public String generateToken(User user) {
     Instant now = Instant.now();
-    String scope = user.getRole().getName();
+    String scope = user.getRole().getName().name();
     JwtClaimsSet claims =
         JwtClaimsSet.builder()
             .issuer("self")
             .issuedAt(now)
-            .expiresAt(now.plus(1, ChronoUnit.HOURS))
+            .expiresAt(now.plus(7, ChronoUnit.DAYS))
             .subject(user.getEmail())
             .claim("scope", scope)
             .build();
