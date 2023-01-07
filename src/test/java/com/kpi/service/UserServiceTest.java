@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.kpi.domain.Role;
+import com.kpi.domain.RoleName;
 import com.kpi.domain.User;
 import com.kpi.exception.UserNotFoundException;
 import com.kpi.repository.UserRepository;
@@ -27,7 +28,7 @@ public class UserServiceTest {
   void shouldReturnUserById() {
     Role role = new Role();
     role.setId(1);
-    role.setName("SPECIALIST");
+    role.setName(RoleName.SPECIALIST);
     User user = new User();
     user.setId(1);
     user.setName("user_1");
@@ -35,7 +36,6 @@ public class UserServiceTest {
     user.setPassword("password");
     user.setPhoneNumber("phone_number_1");
     user.setRole(role);
-    user.setIsSpecialist(true);
     when(repository.findById(1)).thenReturn(Optional.of(user));
 
     User result = service.getById(1);

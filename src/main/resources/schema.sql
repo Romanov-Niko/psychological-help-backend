@@ -11,8 +11,7 @@ CREATE TABLE IF NOT EXISTS users
     email        VARCHAR(64)                  NOT NULL,
     password     VARCHAR(64)                  NOT NULL,
     phone_number VARCHAR(64)                  NOT NULL,
-    role_id      INTEGER REFERENCES role (id) NOT NULL,
-    specialist   BOOLEAN                      NOT NULL
+    role_id      INTEGER REFERENCES role (id) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS application

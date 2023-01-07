@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.kpi.domain.Role;
+import com.kpi.domain.RoleName;
 import com.kpi.domain.User;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ public class UserRepositoryTest {
   void shouldFindUserByEmail() {
     Role role = new Role();
     role.setId(1);
-    role.setName("SPECIALIST");
+    role.setName(RoleName.SPECIALIST);
     User expected = new User();
     expected.setId(1);
     expected.setName("user_1");
@@ -29,7 +30,6 @@ public class UserRepositoryTest {
     expected.setPassword("$2a$10$I0tK3uyYb2EnGYHCAl.fo.PdxSzhzWNY2oxQpLPL.oJPU6gAAqmcO");
     expected.setPhoneNumber("phone_number_1");
     expected.setRole(role);
-    expected.setIsSpecialist(true);
 
     Optional<User> actual = repository.findByEmail("email_1");
 

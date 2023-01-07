@@ -1,4 +1,9 @@
 spring:
+  mail:
+    host: localhost
+    port: 3025 # default protocol port + 3000 as offset
+    username: "user"
+    password: "password"
   jpa:
     hibernate:
       ddl-auto: none

@@ -13,5 +13,4 @@ public class UserResponseDto {
   String email;
   String phoneNumber;
   String role;
-  Boolean isSpecialist;
 }
