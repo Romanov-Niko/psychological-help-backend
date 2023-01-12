@@ -40,7 +40,9 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http.csrf(AbstractHttpConfigurer::disable)
+    return http.cors()
+        .and()
+        .csrf(AbstractHttpConfigurer::disable)
         .authorizeRequests(
             auth -> auth.antMatchers("/token").permitAll().anyRequest().authenticated())
         .sessionManagement(
@@ -75,9 +77,9 @@ public class SecurityConfig {
   }
 
   @Bean
-  CorsConfigurationSource corsConfigurationSource() {
+  public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("https://localhost:3000"));
+    configuration.setAllowedOrigins(List.of("*"));
     configuration.setAllowedHeaders(List.of("*"));
     configuration.setAllowedMethods(List.of("*"));
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
