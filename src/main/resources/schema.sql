@@ -56,5 +56,6 @@ CREATE TABLE IF NOT EXISTS article
     specialist_id INTEGER REFERENCES users (id) NOT NULL,
     date_time     TIMESTAMP                     NOT NULL,
     title         VARCHAR(256)                  NOT NULL,
+    preview_text  VARCHAR(256)                  NOT NULL,
     article_text  TEXT                          NOT NULL
 );

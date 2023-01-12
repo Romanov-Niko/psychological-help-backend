@@ -34,5 +34,10 @@ VALUES (3, 1, now(), false);
 INSERT INTO appointment_review(appointment_id, date_time, review_text)
 VALUES (1, now(), 'Text review text');
 
-INSERT INTO article(specialist_id, date_time, title, article_text)
-VALUES (1, now(), 'Test article title', 'Test article text');
+INSERT INTO article(specialist_id, date_time, title, preview_text, article_text)
+VALUES (1, now(), 'Test article title 1', 'Test preview text 1', 'Test article text'),
+       (1, now(), 'Test article title 2', 'Test preview text 2', 'Test article text'),
+       (1, now(), 'Test article title 3', 'Test preview text 3', 'Test article text'),
+       (1, now(), 'Test article title 4', 'Test preview text 4', 'Test article text'),
+       (1, now(), 'Test article title 5', 'Test preview text 5', 'Test article text'),
+       (1, now(), 'Test article title 6', 'Test preview text 6', 'Test article text');

@@ -14,5 +14,6 @@ public class ArticleResponseDto {
   Integer specialistId;
   LocalDateTime dateTime;
   String title;
+  String previewText;
   String articleText;
 }

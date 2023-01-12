@@ -31,5 +31,6 @@ public class Article {
 
   @Column private LocalDateTime dateTime;
   @Column private String title;
+  @Column private String previewText;
   @Column private String articleText;
 }

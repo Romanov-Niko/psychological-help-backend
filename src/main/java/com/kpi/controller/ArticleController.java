@@ -47,6 +47,7 @@ public class ArticleController {
         .specialistId(article.getSpecialist().getId())
         .dateTime(article.getDateTime())
         .title(article.getTitle())
+        .previewText(article.getPreviewText())
         .articleText(article.getArticleText())
         .build();
   }
