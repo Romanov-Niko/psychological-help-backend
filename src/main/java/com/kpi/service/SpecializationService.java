@@ -15,4 +15,8 @@ public class SpecializationService {
   public List<Specialization> getAll() {
     return repository.findAll();
   }
+
+  public List<Specialization> getAllBySpecialistId(Integer id) {
+    return repository.findAllBySpecialistId(id);
+  }
 }

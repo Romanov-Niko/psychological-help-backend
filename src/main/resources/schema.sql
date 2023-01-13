@@ -59,3 +59,10 @@ CREATE TABLE IF NOT EXISTS article
     preview_text  VARCHAR(256)                  NOT NULL,
     article_text  TEXT                          NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS password_recovery
+(
+    id            SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users (id) NOT NULL,
+    message         UUID         NOT NULL
+);

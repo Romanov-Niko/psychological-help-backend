@@ -23,7 +23,7 @@ public class TokenService {
             .issuer("self")
             .issuedAt(now)
             .expiresAt(now.plus(7, ChronoUnit.DAYS))
-            .subject(user.getEmail())
+            .subject(user.getId().toString())
             .claim("scope", scope)
             .build();
     return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

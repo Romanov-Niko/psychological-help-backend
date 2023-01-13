@@ -7,6 +7,7 @@ TRUNCATE specialization RESTART IDENTITY CASCADE;
 
 TRUNCATE users RESTART IDENTITY CASCADE;
 TRUNCATE role RESTART IDENTITY CASCADE;
+TRUNCATE password_recovery RESTART IDENTITY CASCADE;
 
 INSERT INTO role(name)
 VALUES ('SPECIALIST'),
@@ -16,7 +17,9 @@ VALUES ('SPECIALIST'),
 INSERT INTO users(name, email, password, phone_number, role_id)
 VALUES ('user_1', 'email_1', '$2a$10$I0tK3uyYb2EnGYHCAl.fo.PdxSzhzWNY2oxQpLPL.oJPU6gAAqmcO', 'phone_number_1', 1),
        ('user_2', 'email_2', '$2a$10$I0tK3uyYb2EnGYHCAl.fo.PdxSzhzWNY2oxQpLPL.oJPU6gAAqmcO', 'phone_number_2', 2),
-       ('user_3', 'email_3', '$2a$10$I0tK3uyYb2EnGYHCAl.fo.PdxSzhzWNY2oxQpLPL.oJPU6gAAqmcO', 'phone_number_3', 3);
+       ('user_3', 'email_3', '$2a$10$I0tK3uyYb2EnGYHCAl.fo.PdxSzhzWNY2oxQpLPL.oJPU6gAAqmcO', 'phone_number_3', 3),
+       ('user_4', 'email_4', '$2a$10$I0tK3uyYb2EnGYHCAl.fo.PdxSzhzWNY2oxQpLPL.oJPU6gAAqmcO', 'phone_number_4', 3),
+       ('user_5', 'artem98962@gmail.com', '$2a$10$I0tK3uyYb2EnGYHCAl.fo.PdxSzhzWNY2oxQpLPL.oJPU6gAAqmcO', 'phone_number_4', 3);
 
 INSERT INTO specialization(name)
 VALUES ('test_specialization_1'),
@@ -41,3 +44,6 @@ VALUES (1, now(), 'Test article title 1', 'Test preview text 1', 'Test article t
        (1, now(), 'Test article title 4', 'Test preview text 4', 'Test article text'),
        (1, now(), 'Test article title 5', 'Test preview text 5', 'Test article text'),
        (1, now(), 'Test article title 6', 'Test preview text 6', 'Test article text');
+
+INSERT INTO password_recovery(user_id, message)
+VALUES (4, 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee');

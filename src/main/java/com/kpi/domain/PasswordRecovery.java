@@ -1,5 +1,6 @@
 package com.kpi.domain;
 
+import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,22 +8,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
+@Table(name = "password_recovery")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class PasswordRecovery {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column private String name;
-  @Column private String email;
-  @Column private String password;
-  @Column private String phoneNumber;
+  @OneToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
-  @ManyToOne
-  @JoinColumn(name = "role_id")
-  private Role role;
+  @Column private UUID message;
 }
