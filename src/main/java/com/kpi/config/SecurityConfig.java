@@ -44,7 +44,19 @@ public class SecurityConfig {
         .and()
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeRequests(
-            auth -> auth.antMatchers("/token").permitAll().anyRequest().authenticated())
+            auth ->
+                auth.antMatchers(
+                        "/token",
+                        "/articles/**",
+                        "/registration/",
+                        "/password/recovery/**",
+                        "/appointments/specialist/**",
+                        "/specialists/**")
+                    .permitAll()
+                    .antMatchers("/users/**")
+                    .hasAuthority("SCOPE_ADMIN")
+                    .anyRequest()
+                    .authenticated())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
