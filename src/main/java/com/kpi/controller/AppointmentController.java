@@ -4,6 +4,7 @@ import com.kpi.domain.Appointment;
 import com.kpi.dto.request.AppointmentRequestDto;
 import com.kpi.dto.response.AppointmentResponseDto;
 import com.kpi.service.AppointmentService;
+import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +24,6 @@ public class AppointmentController {
   }
 
   @GetMapping("/specialist/{id}")
-  @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
   public List<AppointmentResponseDto> getAllBySpecialistId(@PathVariable Integer id) {
     List<Appointment> appointments = service.getAllBySpecialistId(id);
     return appointments.stream().map(this::convertToDto).toList();
@@ -38,15 +38,9 @@ public class AppointmentController {
 
   @PostMapping("/")
   @PreAuthorize("hasAnyAuthority('SCOPE_SPECIALIST', 'SCOPE_ADMIN')")
-  public AppointmentResponseDto save(@RequestBody AppointmentRequestDto dto) {
-    return convertToDto(service.save(dto));
-  }
-
-  @PutMapping("/{id}")
-  @PreAuthorize("hasAnyAuthority('SCOPE_SPECIALIST', 'SCOPE_ADMIN')")
-  public AppointmentResponseDto update(
-      @RequestBody AppointmentRequestDto dto, @PathVariable Integer id) {
-    return convertToDto(service.update(dto, id));
+  public AppointmentResponseDto save(@RequestBody AppointmentRequestDto dto, Principal principal) {
+    Integer id = Integer.parseInt(principal.getName());
+    return convertToDto(service.save(dto, id));
   }
 
   @DeleteMapping("/{id}")

@@ -33,43 +33,30 @@ public class AppointmentService {
     return repository.findAllByPatientId(id);
   }
 
-  public Appointment save(AppointmentRequestDto dto) {
-    User specialist =
-        userRepository
-            .findByIdAndRoleName(dto.getSpecialistId(), RoleName.SPECIALIST)
-            .orElseThrow(
-                () -> new UserNotFoundException("Specialist with given id was not found!"));
-    User patient =
-        userRepository
-            .findByIdAndRoleName(dto.getPatientId(), RoleName.PATIENT)
-            .orElseThrow(() -> new UserNotFoundException("Patient with given id was not found!"));
-    Appointment appointment =
-        Appointment.builder()
-            .patient(patient)
-            .specialist(specialist)
-            .dateTime(dto.getDateTime())
-            .canceled(dto.getCanceled())
-            .build();
-    return repository.save(appointment);
+  public List<Appointment> getAll(Integer id) {
+    User user = userRepository.findById(id).orElseThrow();
+    if (user.getRole().getName() == RoleName.PATIENT) {
+      return getAllByPatientId(id);
+    }
+    return getAllBySpecialistId(id);
   }
 
-  public Appointment update(AppointmentRequestDto dto, Integer id) {
+  public Appointment save(AppointmentRequestDto dto, Integer specialistId) {
     User specialist =
         userRepository
-            .findByIdAndRoleName(dto.getSpecialistId(), RoleName.SPECIALIST)
+            .findById(specialistId)
             .orElseThrow(
                 () -> new UserNotFoundException("Specialist with given id was not found!"));
     User patient =
         userRepository
-            .findByIdAndRoleName(dto.getPatientId(), RoleName.PATIENT)
+            .findByEmailAndRoleName(dto.getEmail(), RoleName.PATIENT)
             .orElseThrow(() -> new UserNotFoundException("Patient with given id was not found!"));
     Appointment appointment =
         Appointment.builder()
-            .id(id)
             .patient(patient)
             .specialist(specialist)
             .dateTime(dto.getDateTime())
-            .canceled(dto.getCanceled())
+            .canceled(Boolean.FALSE)
             .build();
     return repository.save(appointment);
   }

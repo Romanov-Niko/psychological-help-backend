@@ -1,8 +1,8 @@
-version: '2'
+version: '3'
 
 services:
   backend:
-    image: 'romanovniko/psychological-help-backend:latest'
+    image: 'art91/psychological-help-backend:latest'
     container_name: psychological-help-backend
     depends_on:
       database:

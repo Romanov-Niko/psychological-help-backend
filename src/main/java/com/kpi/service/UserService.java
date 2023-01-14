@@ -33,10 +33,6 @@ public class UserService {
     return userRepository.findAll();
   }
 
-  public List<User> getAllSpecialists() {
-    return userRepository.findAllByRoleName(RoleName.SPECIALIST);
-  }
-
   public User getByEmailAndPassword(String email, String password) {
     return userRepository
         .findByEmail(email)

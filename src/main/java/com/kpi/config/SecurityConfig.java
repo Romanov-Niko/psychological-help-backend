@@ -47,10 +47,11 @@ public class SecurityConfig {
             auth ->
                 auth.antMatchers(
                         "/token",
-                        "/users/specialists",
                         "/articles/**",
                         "/registration/",
-                        "/password/recovery/**")
+                        "/password/recovery/**",
+                        "/appointments/specialist/**",
+                        "/specialists/**")
                     .permitAll()
                     .antMatchers("/users/**")
                     .hasAuthority("SCOPE_ADMIN")

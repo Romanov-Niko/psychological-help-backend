@@ -1,11 +1,8 @@
 package com.kpi.controller;
 
-import com.kpi.domain.Specialization;
 import com.kpi.domain.User;
 import com.kpi.dto.request.UserRequestDto;
-import com.kpi.dto.response.SpecialistResponseDto;
 import com.kpi.dto.response.UserResponseDto;
-import com.kpi.service.SpecializationService;
 import com.kpi.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +15,6 @@ public class UserController {
 
   private final UserService userService;
 
-  private final SpecializationService specializationService;
-
   @GetMapping("/{id}")
   public UserResponseDto getById(@PathVariable Integer id) {
     User user = userService.getById(id);
@@ -30,18 +25,6 @@ public class UserController {
   public List<UserResponseDto> getAll() {
     List<User> users = userService.getAll();
     return users.stream().map(this::convertToUserDto).toList();
-  }
-
-  @GetMapping("/specialists")
-  public List<SpecialistResponseDto> getAllSpecialists() {
-    return userService.getAllSpecialists().stream()
-        .map(
-            user -> {
-              List<Specialization> specializations =
-                  specializationService.getAllBySpecialistId(user.getId());
-              return convertToSpecialistDto(user, specializations);
-            })
-        .toList();
   }
 
   @PostMapping("/")
@@ -66,18 +49,6 @@ public class UserController {
         .email(user.getEmail())
         .phoneNumber(user.getPhoneNumber())
         .role(user.getRole().getName().name())
-        .build();
-  }
-
-  private SpecialistResponseDto convertToSpecialistDto(
-      User user, List<Specialization> specializations) {
-    return SpecialistResponseDto.builder()
-        .id(user.getId())
-        .name(user.getName())
-        .email(user.getEmail())
-        .phoneNumber(user.getPhoneNumber())
-        .role(user.getRole().getName().name())
-        .specializations(specializations)
         .build();
   }
 }

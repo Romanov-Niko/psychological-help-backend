@@ -10,10 +10,6 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @Jacksonized
 public class AppointmentRequestDto {
-  Integer patientId;
-
-  Integer specialistId;
-
+  String email;
   LocalDateTime dateTime;
-  Boolean canceled;
 }
