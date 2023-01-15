@@ -7,6 +7,7 @@ import com.kpi.dto.request.AppointmentRequestDto;
 import com.kpi.exception.UserNotFoundException;
 import com.kpi.repository.AppointmentRepository;
 import com.kpi.repository.UserRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,22 +16,28 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AppointmentService {
 
-  private final AppointmentRepository repository;
+  private final AppointmentRepository appointmentRepository;
 
   private final UserRepository userRepository;
 
   public Appointment getById(Integer id) {
-    return repository
+    return appointmentRepository
         .findById(id)
         .orElseThrow(() -> new UserNotFoundException("Appointment with given id was not found!"));
   }
 
   public List<Appointment> getAllBySpecialistId(Integer id) {
-    return repository.findAllBySpecialistId(id);
+    return appointmentRepository.findAllBySpecialistId(id);
   }
 
   public List<Appointment> getAllByPatientId(Integer id) {
-    return repository.findAllByPatientId(id);
+    return appointmentRepository.findAllByPatientId(id);
+  }
+
+  public List<Appointment> getAllBySpecialistIdAndDate(Integer id, LocalDateTime dateTime) {
+    LocalDateTime from = dateTime.toLocalDate().atStartOfDay();
+    LocalDateTime to = from.plusDays(1);
+    return appointmentRepository.findAllBySpecialistIdAndDateTimeBetween(id, from, to);
   }
 
   public List<Appointment> getAll(Integer id) {
@@ -47,21 +54,32 @@ public class AppointmentService {
             .findById(specialistId)
             .orElseThrow(
                 () -> new UserNotFoundException("Specialist with given id was not found!"));
-    User patient =
-        userRepository
-            .findByEmailAndRoleName(dto.getEmail(), RoleName.PATIENT)
-            .orElseThrow(() -> new UserNotFoundException("Patient with given id was not found!"));
     Appointment appointment =
         Appointment.builder()
-            .patient(patient)
             .specialist(specialist)
             .dateTime(dto.getDateTime())
             .canceled(Boolean.FALSE)
+            .free(Boolean.TRUE)
             .build();
-    return repository.save(appointment);
+    return appointmentRepository.save(appointment);
+  }
+
+  public Appointment checkIn(Integer appointmentId, Integer patientId) {
+    User patient =
+        userRepository
+            .findById(patientId)
+            .orElseThrow(() -> new UserNotFoundException("Patient with given id was not found!"));
+    Appointment appointment =
+        appointmentRepository
+            .findById(appointmentId)
+            .orElseThrow(
+                () -> new UserNotFoundException("Appointment with given id was not found!"));
+    appointment.setPatient(patient);
+    appointment.setFree(Boolean.FALSE);
+    return appointmentRepository.save(appointment);
   }
 
   public void deleteById(Integer id) {
-    repository.deleteById(id);
+    appointmentRepository.deleteById(id);
   }
 }

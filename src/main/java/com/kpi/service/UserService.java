@@ -3,6 +3,7 @@ package com.kpi.service;
 import com.kpi.domain.Role;
 import com.kpi.domain.RoleName;
 import com.kpi.domain.User;
+import com.kpi.dto.request.ProfileUpdateRequestDto;
 import com.kpi.dto.request.UserRegistrationDto;
 import com.kpi.dto.request.UserRequestDto;
 import com.kpi.exception.RoleNotFoundException;
@@ -87,20 +88,14 @@ public class UserService {
     return userRepository.save(user);
   }
 
-  public User update(UserRequestDto dto, Integer id) {
-    Role role =
-        roleRepository
-            .findById(dto.getRoleId())
-            .orElseThrow(() -> new RoleNotFoundException("Role not found!"));
+  public User update(ProfileUpdateRequestDto dto, Integer id) {
     User user =
-        User.builder()
-            .id(id)
-            .name(dto.getName())
-            .email(dto.getEmail())
-            .password(passwordEncoder.encode(dto.getPassword()))
-            .phoneNumber(dto.getPhoneNumber())
-            .role(role)
-            .build();
+        userRepository
+            .findById(id)
+            .orElseThrow(() -> new UserNotFoundException("User with given id was not found!"));
+    user.setName(dto.getName());
+    user.setEmail(dto.getEmail());
+    user.setPhoneNumber(dto.getPhoneNumber());
     return userRepository.save(user);
   }
 

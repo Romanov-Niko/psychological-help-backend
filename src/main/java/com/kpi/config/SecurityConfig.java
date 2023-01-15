@@ -51,7 +51,10 @@ public class SecurityConfig {
                         "/registration/",
                         "/password/recovery/**",
                         "/appointments/specialist/**",
-                        "/specialists/**")
+                        "/appointments/by/date/**",
+                        "/specialists/**",
+                        "/upload",
+                        "/files/**")
                     .permitAll()
                     .antMatchers("/users/**")
                     .hasAuthority("SCOPE_ADMIN")

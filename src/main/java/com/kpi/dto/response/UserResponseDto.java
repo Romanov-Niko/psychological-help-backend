@@ -13,4 +13,5 @@ public class UserResponseDto {
   String email;
   String phoneNumber;
   String role;
+  Integer imageId;
 }
