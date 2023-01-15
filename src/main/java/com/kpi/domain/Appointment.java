@@ -35,4 +35,5 @@ public class Appointment {
 
   @Column private LocalDateTime dateTime;
   @Column private Boolean canceled;
+  @Column private Boolean free;
 }

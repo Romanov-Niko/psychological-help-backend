@@ -1,10 +1,12 @@
 package com.kpi.controller;
 
 import com.kpi.domain.Article;
+import com.kpi.domain.FileDB;
 import com.kpi.dto.request.ArticleRequestDto;
 import com.kpi.dto.response.ArticleResponseDto;
 import com.kpi.service.ArticleService;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +51,7 @@ public class ArticleController {
         .title(article.getTitle())
         .previewText(article.getPreviewText())
         .articleText(article.getArticleText())
+        .imageId(Optional.ofNullable(article.getImage()).map(FileDB::getId).orElse(null))
         .build();
   }
 }

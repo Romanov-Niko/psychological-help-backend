@@ -21,6 +21,7 @@ services:
     container_name: psychological-help-database
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+      - ./images:/images
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}

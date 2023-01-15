@@ -16,4 +16,5 @@ public class ArticleResponseDto {
   String title;
   String previewText;
   String articleText;
+  Integer imageId;
 }

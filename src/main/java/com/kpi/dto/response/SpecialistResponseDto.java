@@ -16,4 +16,5 @@ public class SpecialistResponseDto {
   String phoneNumber;
   String role;
   List<Specialization> specializations;
+  Integer imageId;
 }

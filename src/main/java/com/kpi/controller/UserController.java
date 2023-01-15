@@ -1,10 +1,13 @@
 package com.kpi.controller;
 
+import com.kpi.domain.FileDB;
 import com.kpi.domain.User;
+import com.kpi.dto.request.ProfileUpdateRequestDto;
 import com.kpi.dto.request.UserRequestDto;
 import com.kpi.dto.response.UserResponseDto;
 import com.kpi.service.UserService;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +36,8 @@ public class UserController {
   }
 
   @PutMapping("/{id}")
-  public UserResponseDto update(@RequestBody UserRequestDto dto, @PathVariable Integer id) {
+  public UserResponseDto update(
+      @RequestBody ProfileUpdateRequestDto dto, @PathVariable Integer id) {
     return convertToUserDto(userService.update(dto, id));
   }
 
@@ -49,6 +53,7 @@ public class UserController {
         .email(user.getEmail())
         .phoneNumber(user.getPhoneNumber())
         .role(user.getRole().getName().name())
+        .imageId(Optional.ofNullable(user.getImage()).map(FileDB::getId).orElse(null))
         .build();
   }
 }

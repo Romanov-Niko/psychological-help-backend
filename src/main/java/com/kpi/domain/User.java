@@ -25,4 +25,8 @@ public class User {
   @ManyToOne
   @JoinColumn(name = "role_id")
   private Role role;
+
+  @OneToOne
+  @JoinColumn(name = "image")
+  private FileDB image;
 }
